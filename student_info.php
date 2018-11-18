@@ -1,12 +1,4 @@
-<?php
-require 'db_connect.php';
- $studentId = $_GET['id'];
-// echo $studentId;
-// $query= $pdo->prepare('SELECT * FROM exam');
-// $query->execute();
-// $exams = $query->fetchAll(PDO::FETCH_OBJ);
 
- ?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -51,13 +43,12 @@ require 'db_connect.php';
         <h1>Ajouter une note</h1>
 
           <div class="col-md-5">
-            <form action="process/add_mark.php" method="POST">
+            <!--form action="process/add_mark.php" method="POST"-->
+            <form action="" method="POST">
               <div class="form-group">
                 <label for="">Matiere</label>
-                <select class="" name="examId">
-                  <?php foreach ($exams as $exam): ?>
-                  <option value="<?php echo $exam->id; ?>"><?php echo $exam->topic; ?></option>
-                  <?php endforeach; ?>
+                <select class="" id="subjects" name="examId">
+
                 </select>
               </div>
               <div class="form-group">

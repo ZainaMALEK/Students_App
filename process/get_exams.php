@@ -1,5 +1,5 @@
 <?php
-require 'db_connect.php';
+require_once '../db_connect.php';
 
 $query= $pdo->prepare('SELECT * FROM exam');
 $query->execute();
