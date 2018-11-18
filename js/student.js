@@ -1,17 +1,30 @@
 const studentDisplay = document.querySelector('#studentDisplay');
 const student = document.querySelector('#student');
 
-console.log (student.dataset.id);
+//console.log (student.dataset.id);
 
 
-  //Afficher un étudiant
-  function getStudent() {
-      let url = 'process/display_student.php?id='+ student.dataset.id;
-      fetch(url)
-        .then(res => res.json())
-        .then(student => {
+    function getStudentInfo() {
+        let url = 'process/display_student.php?id='+ student.dataset.id;
+        fetch(url)
+          .then(res => res.json())
+          .then(studentInfos => {
 
-          studentDisplay.innerHTML = student.firstname+' '+student.lastname ;
+            student.innerHTML = studentInfos[0].firstname +' '+studentInfos[0].lastname ;
+            let html = '<tr>';
 
-        })
-    }
+            studentInfos.forEach(studentInfo => {
+              html += '<tr>'
+              html += '<td>' + studentInfo.topic + '</td>';
+              html += '<td>' + studentInfo.mark + '</td>';
+              html += '</tr>';
+            })
+
+
+
+            studentDisplay.innerHTML = html ;
+
+          })
+      }
+
+      getStudentInfo();

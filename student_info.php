@@ -1,25 +1,10 @@
 <?php
 require 'db_connect.php';
-$studentId = $_GET['id'];
-//echo $studentId;
-$query= $pdo->prepare('SELECT * FROM exam');
-$query->execute();
-$exams = $query->fetchAll(PDO::FETCH_OBJ);
-//SELECT * FROM mark JOIN exam ON studentId = 1 JOIN student ON student.id =1
-
-//Afficher toutes les infos concernant l'étudiant
-$requete= $pdo->prepare(
-  'SELECT * FROM student
-LEFT JOIN mark
-ON student.id = mark.studentId
-LEFT JOIN exam
-ON exam.id = mark.examId
-WHERE student.id = :studentId');
-$requete->bindParam(':studentId', $studentId);
-$requete->execute();
-$infos = $requete->fetchAll(PDO::FETCH_OBJ);
-
-
+ $studentId = $_GET['id'];
+// echo $studentId;
+// $query= $pdo->prepare('SELECT * FROM exam');
+// $query->execute();
+// $exams = $query->fetchAll(PDO::FETCH_OBJ);
 
  ?>
 <!doctype html>
@@ -47,11 +32,7 @@ $infos = $requete->fetchAll(PDO::FETCH_OBJ);
     <div class="row">
 
       <section class="col-md-6">
-        <h1>Fiche de l'étudiant <?php echo $infos[0]->firstname.' '. $infos[0]->lastname;?></h1>
-
-          <div id="studentDisplay" >
-            <p id="student" data-id ="<?php echo $_GET['id'] ;?>"></p>
-          </div>
+        <h3>Fiche de l'étudiant(e) <span id="student" data-id ="<?php echo $_GET['id'] ;?>"></span></h3>
 
           <table>
             <thead>
@@ -59,22 +40,17 @@ $infos = $requete->fetchAll(PDO::FETCH_OBJ);
               <th>Note</th>
             </thead>
 
-            <tbody>
-              <?php foreach ($infos as $info): ?>
-                <tr>
-                  <td><?php echo $info->topic ?></td>
-                  <td><?php echo $info->mark ?></td>
-                </tr>
-              <?php endforeach ?>
+            <tbody id="studentDisplay">
+
             </tbody>
           </table>
         </section>
+
 
         <section class="col-md-6">
         <h1>Ajouter une note</h1>
 
           <div class="col-md-5">
-            <!--form action="process/add_student.php" method="POST"-->
             <form action="process/add_mark.php" method="POST">
               <div class="form-group">
                 <label for="">Matiere</label>
