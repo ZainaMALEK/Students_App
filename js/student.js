@@ -15,5 +15,3 @@ console.log (student.dataset.id);
 
         })
     }
-
-    getStudent();

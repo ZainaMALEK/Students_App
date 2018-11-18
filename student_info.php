@@ -5,6 +5,21 @@ $studentId = $_GET['id'];
 $query= $pdo->prepare('SELECT * FROM exam');
 $query->execute();
 $exams = $query->fetchAll(PDO::FETCH_OBJ);
+//SELECT * FROM mark JOIN exam ON studentId = 1 JOIN student ON student.id =1
+
+//Afficher toutes les infos concernant l'étudiant
+$requete= $pdo->prepare(
+  'SELECT * FROM student
+LEFT JOIN mark
+ON student.id = mark.studentId
+LEFT JOIN exam
+ON exam.id = mark.examId
+WHERE student.id = :studentId');
+$requete->bindParam(':studentId', $studentId);
+$requete->execute();
+$infos = $requete->fetchAll(PDO::FETCH_OBJ);
+
+
 
  ?>
 <!doctype html>
@@ -32,17 +47,26 @@ $exams = $query->fetchAll(PDO::FETCH_OBJ);
     <div class="row">
 
       <section class="col-md-6">
-        <h1>Fiche étudiant</h1>
+        <h1>Fiche de l'étudiant <?php echo $infos[0]->firstname.' '. $infos[0]->lastname;?></h1>
 
-          <div id="studentDisplay">
+          <div id="studentDisplay" >
             <p id="student" data-id ="<?php echo $_GET['id'] ;?>"></p>
           </div>
 
           <table>
-            <tr>
+            <thead>
               <th>Matière</th>
               <th>Note</th>
-            </tr>
+            </thead>
+
+            <tbody>
+              <?php foreach ($infos as $info): ?>
+                <tr>
+                  <td><?php echo $info->topic ?></td>
+                  <td><?php echo $info->mark ?></td>
+                </tr>
+              <?php endforeach ?>
+            </tbody>
           </table>
         </section>
 
